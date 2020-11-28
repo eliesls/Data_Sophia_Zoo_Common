@@ -1,0 +1,6 @@
+C:\local\philippe.blanc\Dev\Matlab\Etudes\Helioclim\SOMFY_SKY_3\Ref_Data_Base\1553876795.jpg
+C:\local\philippe.blanc\Dev\Matlab\Etudes\Helioclim\SOMFY_SKY_3\Ref_Data_Base\1553876795_SEG.png
+570e942e-fa3b-45c1-9520-cf8068ad7642
+144 256
+127.9 56.3
+0.773220 0.772542
