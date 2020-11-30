@@ -2,6 +2,8 @@ from time import time
 from tqdm import tqdm
 import numpy as np
 from sklearn.metrics import f1_score, accuracy_score, average_precision_score, recall_score
+import matplotlib.pyplot as plt
+import os
 
 def timeit(func):
     def new_func(*args, **kwargs):
@@ -15,11 +17,21 @@ def timeit(func):
 def evaluate(model, X, Y_true):
     nb_sample = X.shape[0]
     Y_pred = model.predict(X)
-    print(f"Accuracy  : {accuracy_score(Y_true, Y_pred):.2f}")
-    print(f"F1 score  : {f1_score(Y_true, Y_pred):.2f}")
-    print(f"Precision : {average_precision_score(Y_true, Y_pred):.2f}")
-    print(f"Recall    : {recall_score(Y_true, Y_pred):.2f}")
+    print(f"Accuracy  : {accuracy_score(Y_true, Y_pred):.3f}")
+    print(f"F1 score  : {f1_score(Y_true, Y_pred):.3f}")
+    print(f"Precision : {average_precision_score(Y_true, Y_pred):.3f}")
+    print(f"Recall    : {recall_score(Y_true, Y_pred):.3f}")
     
+def load_images():
+    ls_data = os.listdir("Data/")
+
+    list_label = [lbl[4:-4] for lbl in ls_data if lbl[:4] == "ima_"]
+
+    X_list = [plt.imread(f"Data/ima_{label}.jpg") for label in list_label]
+    Y_list = [plt.imread(f"Data/mask_{label}_skymask.png") for label in list_label]
+
+    return X_list, Y_list
+
 class LDA():
     
     def __init__(self):
