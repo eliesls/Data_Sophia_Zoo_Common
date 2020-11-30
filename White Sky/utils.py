@@ -86,3 +86,23 @@ class QDA():
             y = np.argmin(scores)
             pred_list.append(y)
         return np.array(pred_list)
+    
+class Kernel():
+    
+    def __init__(self):
+        pass
+        
+    @timeit    
+    def fit(self, X, Y, var):
+        self.X = X
+        self.Y = Y
+        self.var = var
+        
+    @timeit    
+    def predict(self, X):
+        pred = list()
+        for x in X:
+            prob_y = np.sum(self.Y*np.exp(-np.linalg.norm(x-self.X, axis = 1)**2/(2*self.var)))/self.Y[self.Y==1].size
+            prob_x = np.sum((1-self.Y)*np.exp(-np.linalg.norm(x-self.X, axis = 1)**2/(2*self.var)))/self.Y[self.Y==0].size
+            pred.append(1 if prob_y>prob_x else 0)
+        return pred

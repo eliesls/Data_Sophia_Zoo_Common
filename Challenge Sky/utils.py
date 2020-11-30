@@ -28,22 +28,23 @@ class ShifterPro():
         E = dX**2 + dY**2
         E = E[5:-5,5:-5]
         
-        self.x_ref, self.y_ref = np.unravel_index(E.argmax(), E.shape) + 5*np.ones(2).astype(int)
-        
+        self.x_ref, self.y_ref = np.unravel_index(E.argmax(), E.shape) + 50*np.ones(2).astype(int)
+    
+    @timeit    
     def predict(self, image, r_disk, r_search):
         self.win_ref = self.image_ref[self.x_ref-r_disk:self.x_ref+r_disk,self.y_ref-r_disk:self.y_ref+r_disk]
         
         @np.vectorize
         def compute_value(i, j):
-            i -= r_search+self.x_ref
-            j -= r_search+self.y_ref
+            i -= r_search-self.x_ref
+            j -= r_search-self.y_ref
             i, j = int(i), int(j)          
             return np.linalg.norm(self.win_ref - image[i-r_disk:i+r_disk,j-r_disk:j+r_disk])
         
         @np.vectorize
         def compute_value_conv(i, j):
-            i -= r_search+self.x_ref
-            j -= r_search+self.y_ref
+            i += self.x_ref - r_search
+            j += self.y_ref - r_search
             i, j = int(i), int(j)          
             return np.linalg.norm(convolve2d(self.win_ref,image[i-r_disk:i+r_disk,j-r_disk:j+r_disk], mode = "same"))
         
@@ -67,7 +68,7 @@ class ShifterPro():
         
         
         
-    
+# 0.8670 0.2505
     
     
 #dist(image, centre, rayondisque, rayonrecherche)
